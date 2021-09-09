@@ -23,8 +23,16 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
     def handle_item_double_clicked(self, child: QtWidgets.QTreeWidgetItem)->None:
         parent = child.parent()
         if parent is not None:
-            print(parent.text(0), child.text(0))
+            from datetime import datetime
             sizing = self.pool.objects[parent.text(0)].sources[child.text(0)].sizing
-            for i in sizing:
-                print (i)
+            self.table_view.clear()
+            self.table_view.setRowCount(0)
+            for data in sizing:
+                nrow:int=self.table_view.rowCount()
+                self.table_view.insertRow(nrow)
+                self.table_view.setItem(nrow, 0, QtWidgets.QTableWidgetItem(datetime.utcfromtimestamp(data.sec).strftime('%Y-%m-%d %H:%M:%S')))
+                self.table_view.setItem(nrow, 1, QtWidgets.QTableWidgetItem(str(data.value)))
+                self.table_view.setItem(nrow, 2, QtWidgets.QTableWidgetItem(str(data.mnemo_state)))
+
+
 
