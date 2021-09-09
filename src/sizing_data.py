@@ -60,6 +60,12 @@ class Pool:
             tmp.add_sizing(source, Sizing(value, sec, mnemo_state, sence_state))
             self.add(tmp)
 
+    def get_objects_names(self)-> List[str]:
+        return list(self.objects.keys())
+
+    def get_objects(self)->Dict[str, Object]:
+        return self.objects
+
 def open_db(path: object) -> object:
     print(path)
 

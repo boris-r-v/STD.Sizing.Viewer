@@ -1,6 +1,6 @@
 import unittest
 
-from sql_data import Source, Sizing, Object, Pool
+from sizing_data import Source, Sizing, Object, Pool
 
 
 class TestSizing(unittest.TestCase):
@@ -117,3 +117,14 @@ class TestPoolAddData(TestPool):
         self.assertEqual(self.pool.objects[u"10СП"].sources[u"Реле2"].sizing[0].sec, 12345)
         self.assertEqual(self.pool.objects[u"10СП"].sources[u"Реле2"].sizing[0].mnemo_state, 111)
         self.assertEqual(self.pool.objects[u"10СП"].sources[u"Реле2"].sizing[0].sence_state, 222)
+
+class TestPoolGetData(unittest.TestCase):
+    def test_init(self):
+        self.pool = Pool()
+        self.pool.add_data(u"1СП", u"Реле", 98.55, 12345, 111, 222)
+        self.pool.add_data(u"1СП", u"Реле", 100.22, 12349, 222, 111)
+        self.pool.add_data(u"10СП", u"Реле", 98.55, 12345, 111, 222)
+        self.pool.add_data(u"10СП", u"Реле2", 98.55, 12345, 111, 222)
+        self.assertEqual(self.pool.get_objects_names(), [u"1СП", u"10СП"])
+        self.assertEqual(self.pool.get_objects()[u"1СП"].name, u"1СП")
+        self.assertEqual(self.pool.get_objects()[u"10СП"].name, u"10СП")
