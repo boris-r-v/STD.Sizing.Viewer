@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>881</width>
-    <height>484</height>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,23 +16,51 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QSplitter" name="splitter_4">
+     <widget class="QSplitter" name="main_splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="handleWidth">
+       <number>10</number>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
       <widget class="QTreeWidget" name="objects_view">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <column>
         <property name="text">
          <string>Объекты измерений</string>
         </property>
        </column>
       </widget>
-      <widget class="QSplitter" name="splitter_3">
+      <widget class="QSplitter" name="chart_sizing_splitter">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
-       <widget class="PlotWidget" name="chart_view"/>
+       <property name="handleWidth">
+        <number>10</number>
+       </property>
+       <widget class="PlotWidget" name="chart_view">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>220</height>
+         </size>
+        </property>
+       </widget>
        <widget class="QTableWidget" name="table_view">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>220</height>
+         </size>
+        </property>
         <property name="columnCount">
          <number>3</number>
         </property>
@@ -68,4 +96,7 @@
  </customwidgets>
  <resources/>
  <connections/>
+ <slots>
+  <slot>item_double_clicked(object)</slot>
+ </slots>
 </ui>
