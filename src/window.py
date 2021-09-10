@@ -2,7 +2,7 @@ from src.main_window import Ui_MainWindow
 from PyQt5 import QtWidgets
 from sizing_data import Pool
 import sqlite_driver
-from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
+from typing import List
 
 
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -12,8 +12,6 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.objects_view.itemDoubleClicked.connect(self.handle_item_double_clicked)
         self.sizing = None
-        toolbar = NavigationToolbar(self.graphic_view.canvas, self)
-        self.graphis_layout.insertWidget(0, toolbar)
 
     def load_pool(self, pool: Pool) -> None:
         self.pool = pool
@@ -32,16 +30,32 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
             from datetime import datetime
             sizing = self.pool.objects[parent.text(0)].sources[child.text(0)].sizing
             self.sizing = (parent.text(0), child.text(0))
+            # fill sizing table
             self.table_view.clear()
             self.table_view.setRowCount(0)
+            values: List[float] = []
+            times: List[str] = []
             for data in sizing:
                 n_row: int = self.table_view.rowCount()
-                print (n_row)
                 self.table_view.insertRow(n_row)
+                times.append(datetime.utcfromtimestamp(data.sec).strftime('%H:%M:%S'))
                 self.table_view.setItem(n_row, 0, QtWidgets.QTableWidgetItem(
-                    datetime.utcfromtimestamp(data.sec).strftime('%Y-%m-%d %H:%M:%S')))
+                                    datetime.utcfromtimestamp(data.sec).strftime('%Y-%m-%d %H:%M:%S')))
                 self.table_view.setItem(n_row, 1, QtWidgets.QTableWidgetItem(str(data.value)))
                 self.table_view.setItem(n_row, 2, QtWidgets.QTableWidgetItem(str(data.mnemo_state)))
+                values.append(data.value)
+            #draw graph
+            self.graphic_view.canvas.axes.clear()
+            self.graphic_view.canvas.axes.tick_params(axis='x', rotation=40)
+            #self.graphic_view.canvas.axes.plot(list(range(0,len(values))), values)
+            #self.graphic_view.canvas.axes.legend(('cosinus', 'sinus'), loc='upper right')
+            self.graphic_view.canvas.axes.set_title(f'{self.sizing[0]} - {self.sizing[1]}')
+
+            self.graphic_view.canvas.axes.plot(times, values)
+            self.graphic_view.canvas.draw()
+
+
+
 
     def clear_all(self) -> None:
         self.table_view.clear()

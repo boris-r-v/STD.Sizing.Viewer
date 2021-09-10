@@ -75,13 +75,7 @@
          </property>
         </column>
        </widget>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <layout class="QVBoxLayout" name="graphis_layout">
-         <item>
-          <widget class="MplWidget" name="graphic_view"/>
-         </item>
-        </layout>
-       </widget>
+       <widget class="MplWidget" name="graphic_view"/>
       </widget>
      </widget>
     </item>
