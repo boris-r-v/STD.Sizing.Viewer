@@ -2,6 +2,10 @@ import unittest
 from sqlite_driver import SqliteDriver, get_pool
 from sizing_data import Source, Sizing, Object, Pool
 import os
+'''
+sqlite instert with subselect
+insert into sizing select iname,source,value, limit_state, mnemo_state, sence_state,sec from all_sizing where iname like "Ч%" and iname like "%П";
+'''
 
 
 class TestSqliteDriver(unittest.TestCase):
