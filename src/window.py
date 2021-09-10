@@ -1,4 +1,4 @@
-from src.main_window import Ui_MainWindow
+from main_window import Ui_MainWindow
 from PyQt5 import QtWidgets
 from sizing_data import Pool
 import sqlite_driver

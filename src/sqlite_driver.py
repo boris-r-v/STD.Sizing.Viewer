@@ -1,5 +1,5 @@
 import sqlite3
-from src import sizing_data
+import sizing_data
 
 
 class SqliteDriver:
