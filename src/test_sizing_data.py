@@ -128,3 +128,17 @@ class TestPoolGetData(unittest.TestCase):
         self.assertEqual(self.pool.get_objects_names(), [u"1СП", u"10СП"])
         self.assertEqual(self.pool.get_objects()[u"1СП"].name, u"1СП")
         self.assertEqual(self.pool.get_objects()[u"10СП"].name, u"10СП")
+
+    def test_clear(self):
+        self.pool = Pool()
+        self.pool.add_data(u"1СП", u"Реле", 98.55, 12345, 111, 222)
+        self.pool.add_data(u"1СП", u"Реле", 100.22, 12349, 222, 111)
+        self.pool.add_data(u"10СП", u"Реле", 98.55, 12345, 111, 222)
+        self.pool.add_data(u"10СП", u"Реле2", 98.55, 12345, 111, 222)
+        self.assertEqual(self.pool.get_objects_names(), [u"1СП", u"10СП"])
+        self.assertEqual(self.pool.get_objects()[u"1СП"].name, u"1СП")
+        self.assertEqual(self.pool.get_objects()[u"10СП"].name, u"10СП")
+        self.pool.clear()
+        self.assertEqual(len(self.pool.get_objects_names()), 0 )
+        self.assertEqual(len(self.pool.get_objects()), 0)
+        self.assertEqual(len(self.pool.objects), 0)

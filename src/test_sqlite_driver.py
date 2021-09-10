@@ -6,7 +6,7 @@ import os
 
 class TestSqliteDriver(unittest.TestCase):
     def setUp(self) -> None:
-        self.drv = SqliteDriver("../tests/test.db")
+        self.drv = SqliteDriver("../tests/test.sqlite.db")
 
     def test_init(self):
         self.assertEqual(True, True)  # add assertion here
@@ -25,7 +25,7 @@ class TestSqliteDriver(unittest.TestCase):
         self.assertNotEqual(len(self.pool.objects[u"svg2988@g7462"].sources[u"Данные"].sizing), 0)
 
     def test_method_connect(self):
-        self.pool: Pool = get_pool("../tests/test.db")
+        self.pool: Pool = get_pool("../tests/test.sqlite.db")
         self.assertNotEqual(len(self.pool.objects), 0)
         self.assertNotEqual(len(self.pool.objects[u"Фидер_1"].sources[u"Напряжение фазы A"].sizing), 0)
         self.assertNotEqual(len(self.pool.objects[u"Фидер_1"].sources[u"Напряжение фазы B"].sizing), 0)

@@ -8,7 +8,8 @@ class TestWindow(TestCase):
         import sys
         app = QtWidgets.QApplication(sys.argv)
         win = Window()
-        win.load_pool(get_pool("../tests/test.db"))
+        win.load_pool(get_pool("../tests/test.sqlite.db"))
         win.show()
         app.exec_()
         self.assertTrue(True)
+

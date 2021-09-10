@@ -66,6 +66,10 @@ class Pool:
     def get_objects(self)->Dict[str, Object]:
         return self.objects
 
+    def clear(self)->None:
+        self.objects.clear()
+
+
 def open_db(path: object) -> object:
     print(path)
 

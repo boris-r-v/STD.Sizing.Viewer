@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(881, 484)
+        MainWindow.resize(881, 490)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -50,8 +50,28 @@ class Ui_MainWindow(object):
         self.statusBar = QtWidgets.QStatusBar(MainWindow)
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
+        self.menuBar = QtWidgets.QMenuBar(MainWindow)
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 881, 20))
+        self.menuBar.setObjectName("menuBar")
+        self.menuFile = QtWidgets.QMenu(self.menuBar)
+        self.menuFile.setObjectName("menuFile")
+        MainWindow.setMenuBar(self.menuBar)
+        self.actionOpen_sqlite_db = QtWidgets.QAction(MainWindow)
+        self.actionOpen_sqlite_db.setObjectName("actionOpen_sqlite_db")
+        self.actionExport_to_csv = QtWidgets.QAction(MainWindow)
+        self.actionExport_to_csv.setObjectName("actionExport_to_csv")
+        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
+        self.menuFile.addAction(self.actionOpen_sqlite_db)
+        self.menuFile.addAction(self.actionExport_to_csv)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionExit)
+        self.menuBar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.actionOpen_sqlite_db.triggered.connect(MainWindow.open_data_base_signal_handle)
+        self.actionExport_to_csv.triggered.connect(MainWindow.save_to_cvs_signal_handle)
+        self.actionExit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -64,6 +84,13 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Значение"))
         item = self.table_view.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Состояние"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.actionOpen_sqlite_db.setText(_translate("MainWindow", "Open sqlite.db"))
+        self.actionOpen_sqlite_db.setShortcut(_translate("MainWindow", "Ctrl+O"))
+        self.actionExport_to_csv.setText(_translate("MainWindow", "Export sizing to csv"))
+        self.actionExport_to_csv.setShortcut(_translate("MainWindow", "Ctrl+S"))
+        self.actionExit.setText(_translate("MainWindow", "Exit"))
+        self.actionExit.setShortcut(_translate("MainWindow", "Ctrl+X"))
 from pyqtgraph import PlotWidget
 
 
