@@ -2,6 +2,7 @@ from src.main_window import Ui_MainWindow
 from PyQt5 import QtWidgets
 from sizing_data import Pool
 import sqlite_driver
+from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
 
 
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -11,6 +12,8 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.objects_view.itemDoubleClicked.connect(self.handle_item_double_clicked)
         self.sizing = None
+        toolbar = NavigationToolbar(self.graphic_view.canvas, self)
+        self.graphis_layout.insertWidget(0, toolbar)
 
     def load_pool(self, pool: Pool) -> None:
         self.pool = pool
@@ -33,6 +36,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
             self.table_view.setRowCount(0)
             for data in sizing:
                 n_row: int = self.table_view.rowCount()
+                print (n_row)
                 self.table_view.insertRow(n_row)
                 self.table_view.setItem(n_row, 0, QtWidgets.QTableWidgetItem(
                     datetime.utcfromtimestamp(data.sec).strftime('%Y-%m-%d %H:%M:%S')))

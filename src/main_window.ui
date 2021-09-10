@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>881</width>
-    <height>490</height>
+    <width>890</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,14 +46,9 @@
        <property name="handleWidth">
         <number>10</number>
        </property>
-       <widget class="PlotWidget" name="chart_view">
-        <property name="minimumSize">
-         <size>
-          <width>30</width>
-          <height>220</height>
-         </size>
-        </property>
-       </widget>
+       <property name="childrenCollapsible">
+        <bool>true</bool>
+       </property>
        <widget class="QTableWidget" name="table_view">
         <property name="minimumSize">
          <size>
@@ -80,6 +75,13 @@
          </property>
         </column>
        </widget>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <layout class="QVBoxLayout" name="graphis_layout">
+         <item>
+          <widget class="MplWidget" name="graphic_view"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -91,7 +93,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>881</width>
+     <width>890</width>
      <height>20</height>
     </rect>
    </property>
@@ -133,9 +135,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PlotWidget</class>
+   <class>MplWidget</class>
    <extends>QGraphicsView</extends>
-   <header>pyqtgraph</header>
+   <header>mplwidget</header>
   </customwidget>
  </customwidgets>
  <resources/>

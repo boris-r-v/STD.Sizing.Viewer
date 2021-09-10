@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(881, 490)
+        MainWindow.resize(890, 612)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -30,10 +30,8 @@ class Ui_MainWindow(object):
         self.chart_sizing_splitter = QtWidgets.QSplitter(self.main_splitter)
         self.chart_sizing_splitter.setOrientation(QtCore.Qt.Vertical)
         self.chart_sizing_splitter.setHandleWidth(10)
+        self.chart_sizing_splitter.setChildrenCollapsible(True)
         self.chart_sizing_splitter.setObjectName("chart_sizing_splitter")
-        self.chart_view = PlotWidget(self.chart_sizing_splitter)
-        self.chart_view.setMinimumSize(QtCore.QSize(30, 220))
-        self.chart_view.setObjectName("chart_view")
         self.table_view = QtWidgets.QTableWidget(self.chart_sizing_splitter)
         self.table_view.setMinimumSize(QtCore.QSize(30, 220))
         self.table_view.setColumnCount(3)
@@ -45,13 +43,21 @@ class Ui_MainWindow(object):
         self.table_view.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.table_view.setHorizontalHeaderItem(2, item)
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.chart_sizing_splitter)
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.graphis_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.graphis_layout.setContentsMargins(0, 0, 0, 0)
+        self.graphis_layout.setObjectName("graphis_layout")
+        self.graphic_view = MplWidget(self.verticalLayoutWidget)
+        self.graphic_view.setObjectName("graphic_view")
+        self.graphis_layout.addWidget(self.graphic_view)
         self.verticalLayout.addWidget(self.main_splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusBar = QtWidgets.QStatusBar(MainWindow)
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 881, 20))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 890, 20))
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(self.menuBar)
         self.menuFile.setObjectName("menuFile")
@@ -91,7 +97,7 @@ class Ui_MainWindow(object):
         self.actionExport_to_csv.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionExit.setShortcut(_translate("MainWindow", "Ctrl+X"))
-from pyqtgraph import PlotWidget
+from mplwidget import MplWidget
 
 
 if __name__ == "__main__":
