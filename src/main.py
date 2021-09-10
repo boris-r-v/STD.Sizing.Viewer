@@ -1,7 +1,11 @@
 import sys
-import sizing_data
-
+from PyQt5 import QtWidgets
+from window import Window
 
 if __name__ == '__main__':
-    sizing_data.open_db(sys.argv[1])
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app = QtWidgets.QApplication(sys.argv)
+    win = Window()
+    win.show()
+    sys.exit(app.exec_())
+
+

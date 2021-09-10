@@ -5,6 +5,9 @@ import sqlite_driver
 from typing import List
 
 
+
+
+
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -12,6 +15,9 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.objects_view.itemDoubleClicked.connect(self.handle_item_double_clicked)
         self.sizing = None
+        self.table_view.setColumnWidth(0, 200)
+        self.table_view.setColumnWidth(2, 100)
+
 
     def load_pool(self, pool: Pool) -> None:
         self.pool = pool
@@ -31,7 +37,6 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
             sizing = self.pool.objects[parent.text(0)].sources[child.text(0)].sizing
             self.sizing = (parent.text(0), child.text(0))
             # fill sizing table
-            self.table_view.clear()
             self.table_view.setRowCount(0)
             values: List[float] = []
             times: List[str] = []
@@ -42,7 +47,10 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.table_view.setItem(n_row, 0, QtWidgets.QTableWidgetItem(
                                     datetime.utcfromtimestamp(data.sec).strftime('%Y-%m-%d %H:%M:%S')))
                 self.table_view.setItem(n_row, 1, QtWidgets.QTableWidgetItem(str(data.value)))
-                self.table_view.setItem(n_row, 2, QtWidgets.QTableWidgetItem(str(data.mnemo_state)))
+                mnemo_state_str: str=u"Свободна"
+                if 1==data.mnemo_state:
+                    mnemo_state_str = u"Занята"
+                self.table_view.setItem(n_row, 2, QtWidgets.QTableWidgetItem(mnemo_state_str))
                 values.append(data.value)
             #draw graph
             self.graphic_view.canvas.axes.clear()
@@ -58,11 +66,12 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def clear_all(self) -> None:
-        self.table_view.clear()
-        self.table_view.setRowCount(0)
-        self.objects_view.clear()
-        self.pool.clear()
-        self.sizing = None
+        if self.pool is not None:
+            self.table_view.clear()
+            self.table_view.setRowCount(0)
+            self.objects_view.clear()
+            self.pool.clear()
+            self.sizing = None
 
     def open_file_chooser_dialog(self) -> str:
         import os
